@@ -6,6 +6,7 @@
 .idea/
 
 # Claude Code local state
+PLAN.md
 .claude/settings.local.json
 .claude/.cc-writes/
 

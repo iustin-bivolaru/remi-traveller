@@ -21,6 +21,46 @@ If the request is empty or too vague to split into tasks, ask the user one focus
 - **At most 4 workers at once.** If there are more independent assignments, run the rest in later batches.
 - **Network:** git commands that reach GitHub (`pull`, `fetch`, `push`, `ls-remote`) must declare `github.com` in the Bash call's `allowed_domains`. If one is still refused, don't look for a way around it: tell the user and give them the exact command to run.
 
+## Plan file (`PLAN.md`)
+
+`PLAN.md` in the repo root holds the workflow's state, so the user can `/clear` at any time without losing track. It's gitignored and never committed. Workers don't use it. A `SessionStart` hook loads it into context automatically after `/clear` or a compaction.
+
+**On start:** if `PLAN.md` exists, read it.
+- Its branch matches the current branch and its status isn't `done`: this is a continuation. Resume from **Next** instead of re-planning.
+- Its branch differs, or its status is `done`: it's a finished or other plan. If it isn't `done`, ask the user whether to abandon it. Then overwrite it with the new plan.
+
+**When to write:** overwrite the whole file (never append) at each milestone:
+- after Step 2 (plan made)
+- after the workers report (Step 3)
+- after each review verdict and fix round (Steps 4-5)
+- after the merge and push (Step 6). Set `Status: done`.
+- whenever you're waiting on the user. Put the question under **Open**.
+
+Don't write it on turns where nothing changed.
+
+**Keep it condensed:** it shows the current state, not a history (git has the history). Aim for under ~40 lines. Drop details once they stop mattering. Use exactly this shape:
+
+```markdown
+# PLAN: <feature-branch>
+Request: <one line>
+Feature head at planning: <sha>
+Status: step <n>/7 (<name>) | done
+
+## Assignments
+| # | Scope | Worker branch | Commit | Review |
+|---|-------|---------------|--------|--------|
+| 1 | <scope> | <branch or -> | <sha or -> | pending / approve / fix round N: <k> findings |
+
+## Decisions
+- <decision> (<why>)
+
+## Open
+- <question for the user or blocker, or "none">
+
+## Next
+- <the exact next action, specific enough to resume cold>
+```
+
 ## Step 0: Is this trivial?
 
 If the change is a typo, a one-line config tweak, or a docs fix that needs no judgment, skip the workflow: do it yourself on a feature branch, run lint and format, commit, and push. **Tell the user you skipped the workflow and why.** Otherwise continue.

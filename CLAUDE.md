@@ -44,6 +44,8 @@ Subagents (in `.claude/agents/`):
 
 Trivial changes (a typo, a one-line config tweak) can skip the workers and reviewer. Say so when skipping.
 
+Workflow state lives in `PLAN.md` (gitignored). It's overwritten at each milestone and loaded automatically after `/clear` by a `SessionStart` hook. The format is in the skill.
+
 ## Notes
 
 - `.idea/` is PyCharm config and is gitignored.
