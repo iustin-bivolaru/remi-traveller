@@ -1,0 +1,41 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Edit(**/.env)",
+      "Edit(**/.env.*)",
+      "Write(**/.env)",
+      "Write(**/.env.*)",
+      "Bash(*.env*)"
+    ]
+  },
+  "sandbox": {
+    "enabled": true,
+    "allowUnsandboxedCommands": false,
+    "filesystem": {
+      "denyRead": [
+        "./.env",
+        "./.env.*",
+        "**/.env",
+        "**/.env.*"
+      ],
+      "denyWrite": [
+        "./.env",
+        "./.env.*",
+        "**/.env",
+        "**/.env.*"
+      ]
+    },
+    "network": {
+      "allowLocalBinding": true,
+      "allowedDomains": [
+        "pypi.org",
+        "files.pythonhosted.org"
+      ]
+    }
+  },
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  }
+}
