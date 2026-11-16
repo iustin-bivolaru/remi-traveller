@@ -19,7 +19,7 @@ Ruff config lives in `pyproject.toml`. CI (`.github/workflows/ci.yml`) runs `ruf
 
 ## Branches
 
-Never commit or push to `main`. Every change goes on a branch (`feat/...`, `fix/...`, `chore/...`) and reaches `main` only through a PR that the user merges. Never run `git push` while `main` is checked out.
+Never commit or push to `main`. Every change goes on a branch (`feat/`, `fix/`, `chore/`, `refactor/`, `docs/`, `test/` + short kebab name) and reaches `main` only through a PR that the user merges. Never run `git push` while `main` is checked out.
 
 No AI attribution: commits and PRs must not include `Co-Authored-By: Claude ...` trailers or "Generated with Claude Code" lines.
 

@@ -11,6 +11,7 @@ You are a worker. The orchestrator has given you a single, scoped task. Your pro
 
 - Implement exactly the task you were given. Do not expand scope, refactor unrelated code, or "improve" things you weren't asked to touch. If you notice something worth fixing outside your task, mention it in your report instead.
 - You work in your own git worktree on your own branch. Stay inside it.
+- If your prompt has a "First step" section, run it before anything else. That includes a `git reset --hard <branch>` to continue earlier work, which is allowed even though you otherwise don't merge. If its check fails, stop and report.
 - Never read, write, or print `.env` files or secrets.
 - Match the existing code style. Keep changes minimal and readable.
 - Before finishing, run:
