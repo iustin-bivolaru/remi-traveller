@@ -31,14 +31,16 @@ Subagents (in `.claude/agents/`):
 - **worker** (Sonnet): implements one scoped task and commits it on its own branch.
 - **code-reviewer** (Opus): independent, read-only review of a diff with no planning context.
 
-### Process for each request
+### Process
 
-1. **Branch**: create the feature branch off `main`.
-2. **Plan**: split the request into tasks. **Group related tasks into a single worker** (same files, same feature, or one depends on another). Only tasks that really are independent get separate workers.
-3. **Delegate**: start **at most 4 workers** in parallel, each with `isolation: "worktree"` so they never touch the same checkout. Each worker prompt has to stand on its own: the goal, the files involved, constraints, and what "done" looks like. Workers only see what's in their prompt.
-4. **Review**: for each worker's branch, start a `code-reviewer` with **only** the task's goal and the diff target (e.g. `git diff <feature-branch>...<worker-branch>`). Never pass along the plan, the worker's report, or the orchestrator's opinion.
-5. **Fix**: send blocker and should-fix findings back to a worker; repeat review until it's approved.
-6. **Merge**: merge the worker branches into the feature branch, run `uvx ruff check . && uvx ruff format --check .`, push the feature branch (no need to ask), and report to the user. Open a PR only when asked.
+**For every code change, follow the `orchestrate` skill** (`.claude/skills/orchestrate/SKILL.md`; the user can also run it as `/orchestrate <request>`). It covers the full process: branch, plan, delegate, review, fix, merge, push, report. In short:
+
+1. Create a feature branch off `main`.
+2. Split the request into tasks and group related tasks into one worker.
+3. Run at most 4 workers in parallel, each with `isolation: "worktree"`.
+4. Have a `code-reviewer` check each worker branch, given only the goal and the diff.
+5. Send confirmed findings back to a worker, up to 2 rounds.
+6. Merge the worker branches, run lint and format, push the feature branch, and report with a compare link.
 
 Trivial changes (a typo, a one-line config tweak) can skip the workers and reviewer. Say so when skipping.
 
