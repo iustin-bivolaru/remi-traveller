@@ -8,7 +8,11 @@
       "Edit(**/.env.*)",
       "Write(**/.env)",
       "Write(**/.env.*)",
-      "Bash(*.env*)"
+      "Bash(*.env*)",
+      "Bash(git push * main)",
+      "Bash(git push * main *)",
+      "Bash(git push *:main*)",
+      "Bash(git push *HEAD:main*)"
     ]
   },
   "sandbox": {
