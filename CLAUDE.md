@@ -21,6 +21,8 @@ Ruff config lives in `pyproject.toml`. CI (`.github/workflows/ci.yml`) runs `ruf
 
 Never commit or push to `main`. Every change goes on a branch (`feat/...`, `fix/...`, `chore/...`) and reaches `main` only through a PR that the user merges. Never run `git push` while `main` is checked out.
 
+No AI attribution: commits and PRs must not include `Co-Authored-By: Claude ...` trailers or "Generated with Claude Code" lines.
+
 ## Agentic workflow
 
 The main session (Opus) is the **planner/orchestrator**. It plans, delegates, reviews, and merges; it doesn't implement features itself.

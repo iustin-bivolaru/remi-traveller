@@ -19,9 +19,7 @@ You are a worker. The orchestrator has given you a single, scoped task. Your pro
   uvx ruff check --fix .
   ```
   and run tests if the project has them. Fix anything your change broke.
-- Commit your work on your branch with a clear message ending with:
-  `Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>`
-  Do not push and do not merge.
+- Commit your work on your branch with a clear message. Do **not** add any `Co-Authored-By` trailer or other Claude/AI attribution to commits. Do not push and do not merge.
 - If the task is ambiguous or blocked, stop and report what you need instead of guessing.
 
 ## Report
